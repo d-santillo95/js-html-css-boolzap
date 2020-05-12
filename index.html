@@ -4,6 +4,7 @@
         <meta charset="utf-8">
         <title>Boolzap</title>
         <script src="https://kit.fontawesome.com/1cd71c3a7d.js" crossorigin="anonymous"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
         <link rel="stylesheet" href="style.css">
     </head>
     <body>
@@ -382,8 +383,9 @@
                         </div>
                         <div id="chat-input">
                             <div id="emoji"><i class="far fa-laugh"></i></div>
-                            <input type="text" id="input-text" name="input-text" placeholder="Scrivi un messaggio">
-                            <div id="vocal"><i class="fas fa-microphone"></i></div>
+                            <input type="text" id="input-text" class="typing" name="input-text" placeholder="Scrivi un messaggio">
+                            <div id="vocal" class="active"><i class="fas fa-microphone"></i></div>
+                            <div id="send"><i class="fas fa-paper-plane"></i></div>
                         </div>
                     </div>
                 </div>

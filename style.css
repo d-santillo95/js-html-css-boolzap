@@ -90,16 +90,16 @@ main {
     color: rgba(0, 0, 0, 0.6);
 }
 
-.text-up{
+.text-up {
     margin-bottom: 5px;
 }
 
-.text-down a{
+.text-down a {
     color: rgba(0, 0, 0, 0.6);
     text-decoration: none;
 }
 
-#desktop-notifications:hover .text-down a{
+#desktop-notifications:hover .text-down a {
     text-decoration: underline;
 }
 
@@ -112,7 +112,7 @@ main {
     position: relative;
 }
 
-#user-search{
+#user-search {
     height: 34px;
     width: 95%;
     border: none;
@@ -122,7 +122,7 @@ main {
     padding: 0 20px 0 70px;
 }
 
-#search::before{
+#search::before {
     content: '\f002';
     font-family: "Font Awesome 5 Free";
     font-weight: 800;
@@ -135,7 +135,7 @@ main {
     z-index: 2;
 }
 
-#user-search:focus{
+#user-search:focus {
     outline: none;
 }
 
@@ -284,8 +284,8 @@ main {
     align-items: flex-end;
 }
 
-.send-message{
-    max-width:100%;
+.send-message {
+    max-width: 100%;
     padding: 6px 70px 8px 9px;
     background-color: #dcf8c6;
     border-radius: 7px;
@@ -294,7 +294,7 @@ main {
     font-size: 14px;
 }
 
-.send-message:first-child::after{
+.send-message:first-child::after {
     content: '';
     width: 0;
     height: 0;
@@ -315,8 +315,8 @@ main {
     align-items: flex-start;
 }
 
-.received-message{
-    max-width:100%;
+.received-message {
+    max-width: 100%;
     padding: 6px 70px 8px 9px;
     background-color: white;
     border-radius: 7px;
@@ -325,7 +325,7 @@ main {
     font-size: 14px;
 }
 
-.received-message:first-child::after{
+.received-message:first-child::after {
     content: '';
     width: 0;
     height: 0;
@@ -345,7 +345,7 @@ main {
     right: 9px;
 }
 
-.message-setting{
+.message-setting {
     font-size: 18px;
     color: rgba(0, 0, 0, 0.45);
     padding: 2px 8px;
@@ -358,15 +358,15 @@ main {
     cursor: pointer;
 }
 
-.send-message .message-setting{
+.send-message .message-setting {
     background-color: #dcf8c6;
 }
 
-.received-message .message-setting{
+.received-message .message-setting {
     background-color: white;
 }
 
-.send-message:hover .message-setting, .received-message:hover .message-setting{
+.send-message:hover .message-setting, .received-message:hover .message-setting {
     display: block;
 }
 
@@ -379,7 +379,7 @@ main {
     padding: 0 10px;
 }
 
-#input-text{
+#input-text {
     height: 40px;
     width: calc(100% - 140px);
     border: none;
@@ -388,16 +388,31 @@ main {
     padding: 0 15px
 }
 
-#input-text:focus{
+#input-text:focus {
     outline: none;
 }
 
-#chat-input i{
+#chat-input i {
     color: rgba(0, 0, 0, 0.3);
     font-size: 24px;
     padding: 0 5px;
 }
 
+#vocal {
+    display: none;
+}
+
+#vocal.active {
+    display: block;
+}
+
+#send {
+    display: none;
+}
+
+#send.active {
+    display: block;
+}
 
 @media (min-width:1400px) {
     .page-wrapper {
