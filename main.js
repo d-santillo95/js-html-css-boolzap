@@ -1,3 +1,22 @@
+$(document).click(function(e) {
+    if ($('#input-text').val() == '') {
+        $('#vocal').addClass('active');
+        $('#send').removeClass('active');
+    }
+    console.log($(e.target));
+    if (!$(e.target).hasClass('nrs')) {
+        $('#search').removeClass('active');
+        $('.icon-search i:first-child').addClass('active');
+        $('.icon-search i:last-child').removeClass('active');
+    }
+})
+
+$('.nrs').click(function () {
+    $('#search').toggleClass('active');
+    $('.icon-search i').toggleClass('active');
+});
+
+
 $('#input-text').keyup(function(e) {
     if ($('#input-text').val() == '') {
         $('#vocal').addClass('active');
@@ -8,13 +27,6 @@ $('#input-text').keyup(function(e) {
     }
     if (e.which==13) {
         send_message();
-    }
-})
-
-$(document).click(function() {
-    if ($('#input-text').val() == '') {
-        $('#vocal').addClass('active');
-        $('#send').removeClass('active');
     }
 })
 
