@@ -256,6 +256,118 @@ main {
     overflow-y: scroll;
     background-image: url(https://i.pinimg.com/originals/4d/ee/65/4dee65d05bdbe09c669afcecc9fd8b20.jpg);
     background-size: cover;
+    padding: 0 50px;
+    display: flex;
+    flex-direction: column;
+}
+
+.day-messages {
+    font-size: 13px;
+    color: rgba(0, 0, 0, 0.88);
+    margin: 10px 0;
+    padding: 6px 12px;
+    align-self: center;
+    background-color: rgba(225, 245, 254, 0.92);
+    border-radius: 7px;
+}
+
+.day-messages p {
+    text-transform: uppercase;
+}
+
+.send-messages {
+    max-width: 75%;
+    align-self: flex-end;
+    margin: 3px 0;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+}
+
+.send-message{
+    max-width:100%;
+    padding: 6px 70px 8px 9px;
+    background-color: #dcf8c6;
+    border-radius: 7px;
+    margin: 2px 0;
+    position: relative;
+    font-size: 14px;
+}
+
+.send-message:first-child::after{
+    content: '';
+    width: 0;
+    height: 0;
+    border-left: 15px solid transparent;
+    border-right: 15px solid transparent;
+    border-top: 15px solid #dcf8c6;
+    position: absolute;
+    top: 0;
+    right: -10px;
+}
+
+.received-messages {
+    max-width: 75%;
+    align-self: flex-start;
+    margin: 3px 0;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.received-message{
+    max-width:100%;
+    padding: 6px 70px 8px 9px;
+    background-color: white;
+    border-radius: 7px;
+    margin: 2px 0;
+    position: relative;
+    font-size: 14px;
+}
+
+.received-message:first-child::after{
+    content: '';
+    width: 0;
+    height: 0;
+    border-left: 15px solid transparent;
+    border-right: 15px solid transparent;
+    border-top: 15px solid white;
+    position: absolute;
+    top: 0;
+    left: -10px;
+}
+
+.time {
+    font-size: 11px;
+    color: rgba(0, 0, 0, 0.45);
+    position: absolute;
+    bottom: 6px;
+    right: 9px;
+}
+
+.message-setting{
+    font-size: 18px;
+    color: rgba(0, 0, 0, 0.45);
+    padding: 2px 8px;
+    display: none;
+    position: absolute;
+    top: 3px;
+    right: 9px;
+    z-index: 2;
+    background-color: lightblue;
+    cursor: pointer;
+}
+
+.send-message .message-setting{
+    background-color: #dcf8c6;
+}
+
+.received-message .message-setting{
+    background-color: white;
+}
+
+.send-message:hover .message-setting, .received-message:hover .message-setting{
+    display: block;
 }
 
 #chat-input {
