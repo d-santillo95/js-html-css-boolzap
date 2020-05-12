@@ -345,6 +345,10 @@ main {
     right: 9px;
 }
 
+.time i.read{
+    color: blue;
+}
+
 .message-setting {
     font-size: 18px;
     color: rgba(0, 0, 0, 0.45);
