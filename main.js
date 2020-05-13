@@ -80,7 +80,7 @@ $('#input-text').keyup(function(e) {
 
 $('#send').click(send_message);
 
-$('.user').click(function() {
+$('#users').on('click', '.user', function() {
     var i = $(this).index();
     $('.user').removeClass('active');
     $(this).addClass('active');
@@ -129,6 +129,8 @@ function send_message() {
     $('.chat-box').eq(i).remove();
     $('#chat-boxes').prepend(first_chat);
     user = first_user;
+    user_access = first_detail.find('.chat-access p');
+    box = first_chat;
     auto_reply(box, user, text, user_access);
 }
 
@@ -173,10 +175,17 @@ function auto_reply(box, user, text, user_access) {
                 user.find('.user-name small').text(time);
                 user_access.text('Ultimo accesso oggi alle ' + time)
                 var first_user = user.clone();
+                var i = user.index();
                 user.remove();
                 $('#users').prepend(first_user);
+                var first_detail = $('.chat-details').eq(i).clone();
+                $('.chat-details').eq(i).remove();
+                $('#header-chat').prepend(first_detail);
+                var first_chat = $('.chat-box').eq(i).clone();
+                $('.chat-box').eq(i).remove();
+                $('#chat-boxes').prepend(first_chat);
                 user = first_user;
-            }, 10000)
-        }, 30000)
-    }, 20000)
+            }, 1000)
+        }, 3000)
+    }, 2000)
 }
