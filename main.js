@@ -12,25 +12,25 @@ $(document).click(function(e) {
     }
 })
 
-$('#search .nrs').click(function() {
+$('#user-search').click(function() {
     $('#search').addClass('active');
     $('.icon-search i:first-child').removeClass('active');
     $('.icon-search i:last-child').addClass('active');
-    setTimeout(function() {
+    setTimeout(function(){
         if ($('#user-search').val() == '') {
             $('.user').removeClass('unselected');
         }
     }, 5)
 });
 
-$('#search icon-search i:first-child').click(function() {
+$('#search .icon-search i:first-child').click(function() {
     $('#search').addClass('active');
     $('.icon-search i:first-child').removeClass('active');
     $('.icon-search i:last-child').addClass('active');
     $('#user-search').focus();
 });
 
-$('#search icon-search i:last-child').click(function() {
+$('#search .icon-search i:last-child').click(function() {
     $('#search').removeClass('active');
     $('.icon-search i:first-child').addClass('active');
     $('.icon-search i:last-child').removeClass('active');

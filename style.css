@@ -147,7 +147,7 @@ main {
 }
 
 .icon-search i.active {
-    display: inline-block;
+    display: block;
 }
 
 #user-search:focus {
