@@ -62,6 +62,16 @@ $('#user-search').keyup(function(e) {
     }
 })
 
+$('.user').click(function() {
+    var i = $(this).index();
+    $('.user').removeClass('active');
+    $(this).addClass('active');
+    $('.chat-details').addClass('unselected');
+    $('.chat-details').eq(i).removeClass('unselected');
+    $('.chat-box').addClass('unselected');
+    $('.chat-box').eq(i).removeClass('unselected');
+})
+
 $('#input-text').keyup(function(e) {
     if ($('#input-text').val() == '') {
         $('#vocal').addClass('active');
@@ -89,35 +99,46 @@ function send_message() {
     }
     var time = '' + h + ':' + m;
     var text = $('#input-text').val();
-    if ($('#chat-box .received-messages').is(':last-child')) {
+    var box = $('.chat-box').not('.unselected');
+    var user_access = $('.chat-details').not('.unselected').find('.chat-access p');
+    if (box.children('.received-messages').is(':last-child')) {
         var message = $('.template .send-messages').clone();
         message.find('.text-message').text(text);
         message.find('.clock').html(time + ' <i class="fas fa-check"></i>');
-        $('#chat-box').append(message);
+        box.append(message);
     } else {
         var message = $('.template .send-messages .send-message').clone();
         message.find('.text-message').text(text);
         message.find('.clock').html(time + ' <i class="fas fa-check"></i>');
-        $('#chat-box .send-messages:last-child').append(message);
+        box.children('.send-messages:last-child').append(message);
     }
+    var user = $('.user.active');
+    user.find('.user-message p').html('<i class="fas fa-check"></i> ' + text);
+    user.find('.user-name small').text(time);
     $('#input-text').val('');
     $('#vocal').addClass('active');
     $('#send').removeClass('active');
-    auto_reply();
+    auto_reply(box, user, text, user_access);
 }
 
-function auto_reply() {
+function auto_reply(box, user, text, user_access) {
     setTimeout(function() {
-        $('#chat-box .send-messages:last-child .send-message .time i').removeClass('fa-check');
-        $('#chat-box .send-messages:last-child .send-message .time i').addClass('fa-check-double');
+        box.find('.send-messages:last-child .send-message .time i').removeClass('fa-check');
+        box.find('.send-messages:last-child .send-message .time i').addClass('fa-check-double');
+        user.find('.user-message p i').removeClass('fa-check');
+        user.find('.user-message p i').addClass('fa-check-double');
         setTimeout(function() {
-            $('#chat-box .send-messages:last-child .send-message .time i').removeClass('fa-check');
-            $('#chat-box .send-messages:last-child .send-message .time i').addClass('fa-check-double');
-            $('#chat-box .send-messages:last-child .send-message .time i').addClass('read');
+            box.find('.send-messages:last-child .send-message .time i').removeClass('fa-check');
+            box.find('.send-messages:last-child .send-message .time i').addClass('fa-check-double');
+            box.find('.send-messages:last-child .send-message .time i').addClass('read');
+            user.find('.user-message p i').removeClass('fa-check');
+            user.find('.user-message p i').addClass('fa-check-double');
+            user.find('.user-message p i').addClass('read');
+            user_access.text('online');
             setTimeout(function() {
-                $('#chat-box .send-messages:last-child .send-message .time i').removeClass('fa-check');
-                $('#chat-box .send-messages:last-child .send-message .time i').addClass('fa-check-double');
-                $('#chat-box .send-messages:last-child .send-message .time i').addClass('read');
+                box.find('.send-messages:last-child .send-message .time i').removeClass('fa-check');
+                box.find('.send-messages:last-child .send-message .time i').addClass('fa-check-double');
+                box.find('.send-messages:last-child .send-message .time i').addClass('read');
                 var d = new Date();
                 var h = d.getHours();
                 var m = d.getMinutes();
@@ -125,18 +146,21 @@ function auto_reply() {
                     m = '0' + m;
                 }
                 var time = '' + h + ':' + m;
-                var text = 'ok'
-                if ($('#chat-box .send-messages').is(':last-child')) {
+                var textr = 'ok'
+                if (box.children('.send-messages').is(':last-child')) {
                     var message = $('.template .received-messages').clone();
-                    message.find('.text-message').text(text);
+                    message.find('.text-message').text(textr);
                     message.find('.clock').text(time);
-                    $('#chat-box').append(message);
+                    box.append(message);
                 } else {
                     var message = $('.template .received-messages .received-message').clone();
-                    message.find('.text-message').text(text);
+                    message.find('.text-message').text(textr);
                     message.find('.clock').text(time);
-                    $('#chat-box .received-messages:last-child').append(message);
+                    box.children('.received-messages:last-child').append(message);
                 }
+                user.find('.user-message p').text(textr);
+                user.find('.user-name small').text(time);
+                user_access.text('Ultimo accesso oggi alle ' + time)
             }, 10000)
         }, 30000)
     }, 20000)

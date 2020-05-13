@@ -167,8 +167,16 @@ main {
     cursor: pointer;
 }
 
+.user:hover{
+    background-color: #f5f5f5;
+}
+
 .user.unselected {
     display: none;
+}
+
+.user.active{
+    background-color: #ebebeb;
 }
 
 .user-img {
@@ -212,6 +220,10 @@ main {
     color: rgba(0, 0, 0, 0.6);
 }
 
+.user-message i.read{
+    color: #4fc3f7;
+}
+
 #chat {
     width: 70%;
     height: 100%;
@@ -231,6 +243,10 @@ main {
 .chat-details {
     display: flex;
     align-items: center;
+}
+
+.chat-details.unselected {
+    display: none;
 }
 
 .chat-img {
@@ -269,7 +285,7 @@ main {
     font-size: 24px;
 }
 
-#chat-box {
+.chat-box {
     height: calc(100% - 120px);
     overflow-y: scroll;
     background-image: url(https://i.pinimg.com/originals/4d/ee/65/4dee65d05bdbe09c669afcecc9fd8b20.jpg);
@@ -277,6 +293,10 @@ main {
     padding: 0 50px;
     display: flex;
     flex-direction: column;
+}
+
+.chat-box.unselected{
+    display: none;
 }
 
 .day-messages {
