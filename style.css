@@ -197,7 +197,7 @@ main {
 }
 
 .user-details {
-    width: calc(100% - 50px);
+    width: calc(100% - 60px);
     height: 100%;
     margin-left: 15px;
     display: flex;
@@ -208,6 +208,7 @@ main {
 
 .user-name {
     display: flex;
+    width: 100%;
     justify-content: space-between;
     font-size: 17px;
     margin-bottom: 5px;
@@ -219,8 +220,16 @@ main {
 }
 
 .user-message {
+    width: 100%;
     font-size: 14px;
     color: rgba(0, 0, 0, 0.6);
+}
+
+.user-message p{
+    max-width: 90%;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .user-message i.read {
@@ -339,6 +348,11 @@ main {
     margin: 2px 0;
     position: relative;
     font-size: 14px;
+}
+
+.send-message p {
+    max-width: 100%;
+    word-break: break-all;
 }
 
 .send-message:first-child::after {

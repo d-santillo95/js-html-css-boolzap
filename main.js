@@ -131,24 +131,24 @@ function send_message() {
         message.find('.text-message').text(text);
         message.find('.clock').html(time + ' <i class="fas fa-check"></i>');
         box.append(message);
-        var first_user = user.clone();
-        user.remove();
-        $('#users').prepend(first_user);
-        var first_detail = user_detail.clone();
-        user_detail.remove();
-        $('#header-chat').prepend(first_detail);
-        var first_chat = box.clone();
-        box.remove();
-        $('#chat-boxes').prepend(first_chat);
-        user = first_user;
-        user_detail = first_detail;
-        box = first_chat;
     } else {
         var message = $('.template .send-messages .send-message').clone();
         message.find('.text-message').text(text);
         message.find('.clock').html(time + ' <i class="fas fa-check"></i>');
         box.children('.send-messages:last-child').append(message);
     }
+    var first_user = user.clone();
+    user.remove();
+    $('#users').prepend(first_user);
+    var first_detail = user_detail.clone();
+    user_detail.remove();
+    $('#header-chat').prepend(first_detail);
+    var first_chat = box.clone();
+    box.remove();
+    $('#chat-boxes').prepend(first_chat);
+    user = first_user;
+    user_detail = first_detail;
+    box = first_chat;
     user_access = user_detail.find('.chat-access p');
     user.find('.user-message p').html('<i class="fas fa-check"></i> ' + text);
     user.find('.user-name small').text(time);
@@ -198,7 +198,19 @@ function auto_reply(box, user, text, user_access, user_detail) {
                 user.find('.user-message p').text(textr);
                 user.find('.user-name small').text(time);
                 user_access.text('Ultimo accesso oggi alle ' + time)
-            }, 1000)
-        }, 3000)
-    }, 2000)
+                var first_user = user.clone();
+                user.remove();
+                $('#users').prepend(first_user);
+                var first_detail = user_detail.clone();
+                user_detail.remove();
+                $('#header-chat').prepend(first_detail);
+                var first_chat = box.clone();
+                box.remove();
+                $('#chat-boxes').prepend(first_chat);
+                user = first_user;
+                user_detail = first_detail;
+                box = first_chat;
+            }, 2000)
+        }, 6000)
+    }, 4000)
 }
