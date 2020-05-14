@@ -417,6 +417,39 @@ main {
     background-color: white;
 }
 
+.message-menu{
+    display: none;
+    border-radius: 3px;
+    width: 170px;
+    padding: 10px 0;
+    z-index: 3;
+    position: absolute;
+    top: 20px;
+    background-color: white;
+    box-shadow: 0 2px 5px 0 rgba(0,0,0,.26),0 2px 10px 0 rgba(0,0,0,.16);
+}
+
+.send-message .message-menu{
+    right: 0;
+}
+
+.received-message .message-menu{
+    right: -130px;;
+}
+
+.message-menu.active{
+    display: block;
+}
+
+.message-menu p{
+    padding: 10px;
+    cursor: pointer;
+}
+
+.message-menu p:hover{
+    background-color: #f5f5f5;
+}
+
 .send-message:hover .message-setting, .received-message:hover .message-setting {
     display: block;
 }

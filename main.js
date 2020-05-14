@@ -10,13 +10,16 @@ $(document).click(function(e) {
         $('#user-search').val('');
         $('.user').removeClass('unselected');
     }
+    if (!$(e.target).hasClass('message-setting') && !$(e.target).hasClass('fa-angle-down')){
+        $('.message-menu').removeClass('active');
+    }
 })
 
 $('#user-search').click(function() {
     $('#search').addClass('active');
     $('.icon-search i:first-child').removeClass('active');
     $('.icon-search i:last-child').addClass('active');
-    setTimeout(function(){
+    setTimeout(function() {
         if ($('#user-search').val() == '') {
             $('.user').removeClass('unselected');
         }
@@ -88,6 +91,20 @@ $('#users').on('click', '.user', function() {
     $('.chat-details').eq(i).removeClass('unselected');
     $('.chat-box').addClass('unselected');
     $('.chat-box').eq(i).removeClass('unselected');
+    $('#input-text').focus();
+})
+
+$('#chat-boxes').on('click', '.message-setting', function(e) {
+    $('.message-menu').removeClass('active');
+    $(e.target).next('.message-menu').toggleClass('active');
+    $(e.target).parent().next('.message-menu').toggleClass('active');
+})
+
+$('#chat-boxes').on('click', '.message-menu p:nth-child(2)', function(e) {
+    var mes_u = $(e.target).closest('.message:only-child');
+    var mes = $(e.target).closest('.message');
+    mes_u.parent().remove();
+    mes.remove();
 })
 
 function send_message() {
@@ -99,42 +116,42 @@ function send_message() {
     }
     var time = '' + h + ':' + m;
     var text = $('#input-text').val();
+    var user = $('.user.active');
     var box = $('.chat-box').not('.unselected');
-    var user_access = $('.chat-details').not('.unselected').find('.chat-access p');
+    var user_detail = $('.chat-details').not('.unselected');
     if (box.children('.received-messages').is(':last-child')) {
         var message = $('.template .send-messages').clone();
         message.find('.text-message').text(text);
         message.find('.clock').html(time + ' <i class="fas fa-check"></i>');
         box.append(message);
+        var first_user = user.clone();
+        user.remove();
+        $('#users').prepend(first_user);
+        var first_detail = user_detail.clone();
+        user_detail.remove();
+        $('#header-chat').prepend(first_detail);
+        var first_chat = box.clone();
+        box.remove();
+        $('#chat-boxes').prepend(first_chat);
+        user = first_user;
+        user_detail = first_detail;
+        box = first_chat;
     } else {
         var message = $('.template .send-messages .send-message').clone();
         message.find('.text-message').text(text);
         message.find('.clock').html(time + ' <i class="fas fa-check"></i>');
         box.children('.send-messages:last-child').append(message);
     }
-    var user = $('.user.active');
+    user_access = user_detail.find('.chat-access p');
     user.find('.user-message p').html('<i class="fas fa-check"></i> ' + text);
     user.find('.user-name small').text(time);
     $('#input-text').val('');
     $('#vocal').addClass('active');
     $('#send').removeClass('active');
-    var first_user = user.clone();
-    var i = user.index();
-    user.remove();
-    $('#users').prepend(first_user);
-    var first_detail = $('.chat-details').eq(i).clone();
-    $('.chat-details').eq(i).remove();
-    $('#header-chat').prepend(first_detail);
-    var first_chat = $('.chat-box').eq(i).clone();
-    $('.chat-box').eq(i).remove();
-    $('#chat-boxes').prepend(first_chat);
-    user = first_user;
-    user_access = first_detail.find('.chat-access p');
-    box = first_chat;
-    auto_reply(box, user, text, user_access);
+    auto_reply(box, user, text, user_access, user_detail);
 }
 
-function auto_reply(box, user, text, user_access) {
+function auto_reply(box, user, text, user_access, user_detail) {
     setTimeout(function() {
         box.find('.send-messages:last-child .send-message .time i').removeClass('fa-check');
         box.find('.send-messages:last-child .send-message .time i').addClass('fa-check-double');
@@ -174,17 +191,6 @@ function auto_reply(box, user, text, user_access) {
                 user.find('.user-message p').text(textr);
                 user.find('.user-name small').text(time);
                 user_access.text('Ultimo accesso oggi alle ' + time)
-                var first_user = user.clone();
-                var i = user.index();
-                user.remove();
-                $('#users').prepend(first_user);
-                var first_detail = $('.chat-details').eq(i).clone();
-                $('.chat-details').eq(i).remove();
-                $('#header-chat').prepend(first_detail);
-                var first_chat = $('.chat-box').eq(i).clone();
-                $('.chat-box').eq(i).remove();
-                $('#chat-boxes').prepend(first_chat);
-                user = first_user;
             }, 1000)
         }, 3000)
     }, 2000)
