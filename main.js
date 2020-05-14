@@ -105,6 +105,13 @@ $('#chat-boxes').on('click', '.message-menu p:nth-child(2)', function(e) {
     var mes = $(e.target).closest('.message');
     mes_u.parent().remove();
     mes.remove();
+    var box = $('.chat-box').not('.unselected');
+    if (box.children('.received-messages').is(':last-child')) {
+        var text = box.find('.received-messages:last-child .received-message:last-child > p').text();
+    } else {
+        var text = box.find('.send-messages:last-child .send-message:last-child > p').text() + '<i class="' +  box.find('.send-messages:last-child .send-message:last-child .time i').attr("class") + '"></i>';
+    }
+    $('.user.active .user-message p').html(text);
 })
 
 function send_message() {
