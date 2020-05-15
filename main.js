@@ -77,6 +77,7 @@ $('#input-text').keyup(function(e) {
         } else {
             $('#vocal').removeClass('active');
             $('#send').addClass('active');
+            $('.chat-box').not('.unselected').find('.not-ready-message').remove();
         }
     }
 })
@@ -94,6 +95,9 @@ $('#users').on('click', '.user', function() {
     $('.chat-box').addClass('unselected');
     $('.chat-box').eq(i).removeClass('unselected');
     $('#input-text').focus();
+    setTimeout(function() {
+        $('.chat-box').not('.unselected').find('.not-ready-message').remove();
+    }, 10000);
 })
 
 $('#chat-boxes').on('click', '.message-setting', function(e) {
@@ -185,6 +189,21 @@ function auto_reply(box, user, text, user_access, user_detail) {
                     }
                     var time = '' + h + ':' + m;
                     var textr = 'ok'
+                    if (!user.hasClass('active')) {
+                        user.find('.count-notify').addClass('active');
+                        var n = parseInt(user.find('.count-notify p').text());
+                        n += 1;
+                        user.find('.count-notify p').text(n);
+                        if (box.children('.not-ready-message').length == 0) {
+                            mnr = $('.template .not-ready-message').clone();
+                            box.append(mnr);
+                        }
+                        if (n == 1) {
+                            box.find('.not-ready-message p').text(n + ' MESSAGGIO NON LETTO');
+                        } else {
+                            box.find('.not-ready-message p').text(n + ' MESSAGGI NON LETTI')
+                        }
+                    }
                     if (box.children('.received-messages').is(':last-child')) {
                         var message = $('.template .received-messages .received-message').clone();
                         message.find('.text-message').text(textr);
@@ -195,12 +214,6 @@ function auto_reply(box, user, text, user_access, user_detail) {
                         message.find('.text-message').text(textr);
                         message.find('.clock').text(time);
                         box.append(message);
-                    }
-                    if (!user.hasClass('active')) {
-                        user.find('.count-notify').addClass('active');
-                        var n = parseInt(user.find('.count-notify p').text());
-                        n += 1;
-                        user.find('.count-notify p').text(n);
                     }
                     user.find('.user-message').removeClass('writing')
                     user.find('.user-message p').text(textr);
