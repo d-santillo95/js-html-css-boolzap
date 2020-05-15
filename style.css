@@ -166,6 +166,7 @@ main {
     display: flex;
     align-items: center;
     cursor: pointer;
+    position: relative;
 }
 
 .user:hover {
@@ -225,6 +226,11 @@ main {
     color: rgba(0, 0, 0, 0.6);
 }
 
+.user-message.writing{
+    color: #01d250;
+    font-weight: 900;
+}
+
 .user-message p{
     max-width: 90%;
     white-space: nowrap;
@@ -234,6 +240,27 @@ main {
 
 .user-message i.read {
     color: #4fc3f7;
+}
+
+.count-notify {
+    position: absolute;
+    bottom: 15px;
+    right: 15px;
+    background-color: #06d755;
+    border-radius: 50%;
+    color: white;
+    width: 22px;
+    height: 22px;
+    display: none;
+}
+
+.count-notify.active {
+    display: flex;
+}
+
+.count-notify p{
+    margin: auto;
+    font-size: 12px;
 }
 
 #chat {

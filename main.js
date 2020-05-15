@@ -10,7 +10,7 @@ $(document).click(function(e) {
         $('#user-search').val('');
         $('.user').removeClass('unselected');
     }
-    if (!$(e.target).hasClass('message-setting') && !$(e.target).hasClass('fa-angle-down')){
+    if (!$(e.target).hasClass('message-setting') && !$(e.target).hasClass('fa-angle-down')) {
         $('.message-menu').removeClass('active');
     }
 })
@@ -87,6 +87,8 @@ $('#users').on('click', '.user', function() {
     var i = $(this).index();
     $('.user').removeClass('active');
     $(this).addClass('active');
+    $(this).find('.count-notify').removeClass('active');
+    $(this).find('.count-notify p').text('0');
     $('.chat-details').addClass('unselected');
     $('.chat-details').eq(i).removeClass('unselected');
     $('.chat-box').addClass('unselected');
@@ -103,13 +105,17 @@ $('#chat-boxes').on('click', '.message-setting', function(e) {
 $('#chat-boxes').on('click', '.message-menu p:nth-child(2)', function(e) {
     var mes_u = $(e.target).closest('.message:only-child');
     var mes = $(e.target).closest('.message');
+    if (mes_u.length > 0 && mes_u.parent().next().length > 0) {
+        mes_u.parent().prev().append(mes_u.parent().next().children());
+        mes_u.parent().next().remove();
+    }
     mes_u.parent().remove();
     mes.remove();
     var box = $('.chat-box').not('.unselected');
     if (box.children('.received-messages').is(':last-child')) {
         var text = box.find('.received-messages:last-child .received-message:last-child > p').text();
     } else {
-        var text = box.find('.send-messages:last-child .send-message:last-child > p').text() + '<i class="' +  box.find('.send-messages:last-child .send-message:last-child .time i').attr("class") + '"></i>';
+        var text = '<i class="' + box.find('.send-messages:last-child .send-message:last-child .time i').attr("class") + '"></i> ' + box.find('.send-messages:last-child .send-message:last-child > p').text();
     }
     $('.user.active .user-message p').html(text);
 })
@@ -126,29 +132,20 @@ function send_message() {
     var user = $('.user.active');
     var box = $('.chat-box').not('.unselected');
     var user_detail = $('.chat-details').not('.unselected');
-    if (box.children('.received-messages').is(':last-child')) {
-        var message = $('.template .send-messages').clone();
-        message.find('.text-message').text(text);
-        message.find('.clock').html(time + ' <i class="fas fa-check"></i>');
-        box.append(message);
-    } else {
+    if (box.children('.send-messages').is(':last-child')) {
         var message = $('.template .send-messages .send-message').clone();
         message.find('.text-message').text(text);
         message.find('.clock').html(time + ' <i class="fas fa-check"></i>');
         box.children('.send-messages:last-child').append(message);
+    } else {
+        var message = $('.template .send-messages').clone();
+        message.find('.text-message').text(text);
+        message.find('.clock').html(time + ' <i class="fas fa-check"></i>');
+        box.append(message);
     }
-    var first_user = user.clone();
-    user.remove();
-    $('#users').prepend(first_user);
-    var first_detail = user_detail.clone();
-    user_detail.remove();
-    $('#header-chat').prepend(first_detail);
-    var first_chat = box.clone();
-    box.remove();
-    $('#chat-boxes').prepend(first_chat);
-    user = first_user;
-    user_detail = first_detail;
-    box = first_chat;
+    $('#users').prepend(user);
+    $('#header-chat').prepend(user_detail);
+    $('#chat-boxes').prepend(box);
     user_access = user_detail.find('.chat-access p');
     user.find('.user-message p').html('<i class="fas fa-check"></i> ' + text);
     user.find('.user-name small').text(time);
@@ -176,41 +173,44 @@ function auto_reply(box, user, text, user_access, user_detail) {
                 box.find('.send-messages:last-child .send-message .time i').removeClass('fa-check');
                 box.find('.send-messages:last-child .send-message .time i').addClass('fa-check-double');
                 box.find('.send-messages:last-child .send-message .time i').addClass('read');
-                var d = new Date();
-                var h = d.getHours();
-                var m = d.getMinutes();
-                if (m < 10) {
-                    m = '0' + m;
-                }
-                var time = '' + h + ':' + m;
-                var textr = 'ok'
-                if (box.children('.send-messages').is(':last-child')) {
-                    var message = $('.template .received-messages').clone();
-                    message.find('.text-message').text(textr);
-                    message.find('.clock').text(time);
-                    box.append(message);
-                } else {
-                    var message = $('.template .received-messages .received-message').clone();
-                    message.find('.text-message').text(textr);
-                    message.find('.clock').text(time);
-                    box.children('.received-messages:last-child').append(message);
-                }
-                user.find('.user-message p').text(textr);
-                user.find('.user-name small').text(time);
-                user_access.text('Ultimo accesso oggi alle ' + time)
-                var first_user = user.clone();
-                user.remove();
-                $('#users').prepend(first_user);
-                var first_detail = user_detail.clone();
-                user_detail.remove();
-                $('#header-chat').prepend(first_detail);
-                var first_chat = box.clone();
-                box.remove();
-                $('#chat-boxes').prepend(first_chat);
-                user = first_user;
-                user_detail = first_detail;
-                box = first_chat;
-            }, 2000)
+                user_access.text('sta scrivendo ...');
+                user.find('.user-message').addClass('writing');
+                user.find('.user-message p').text('sta scrivendo ...');
+                setTimeout(function() {
+                    var d = new Date();
+                    var h = d.getHours();
+                    var m = d.getMinutes();
+                    if (m < 10) {
+                        m = '0' + m;
+                    }
+                    var time = '' + h + ':' + m;
+                    var textr = 'ok'
+                    if (box.children('.received-messages').is(':last-child')) {
+                        var message = $('.template .received-messages .received-message').clone();
+                        message.find('.text-message').text(textr);
+                        message.find('.clock').text(time);
+                        box.children('.received-messages:last-child').append(message);
+                    } else {
+                        var message = $('.template .received-messages').clone();
+                        message.find('.text-message').text(textr);
+                        message.find('.clock').text(time);
+                        box.append(message);
+                    }
+                    if (!user.hasClass('active')) {
+                        user.find('.count-notify').addClass('active');
+                        var n = parseInt(user.find('.count-notify p').text());
+                        n += 1;
+                        user.find('.count-notify p').text(n);
+                    }
+                    user.find('.user-message').removeClass('writing')
+                    user.find('.user-message p').text(textr);
+                    user.find('.user-name small').text(time);
+                    user_access.text('Ultimo accesso oggi alle ' + time)
+                    $('#users').prepend(user);
+                    $('#header-chat').prepend(user_detail);
+                    $('#chat-boxes').prepend(box);
+                }, 5000)
+            }, 1000)
         }, 6000)
     }, 4000)
 }
