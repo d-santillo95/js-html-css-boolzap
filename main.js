@@ -94,6 +94,7 @@ $('#users').on('click', '.user', function() {
     $('.chat-details').eq(i).removeClass('unselected');
     $('.chat-box').addClass('unselected');
     $('.chat-box').eq(i).removeClass('unselected');
+    $('.chat-box').eq(i).scrollTop(300000000);
     $('#input-text').focus();
     setTimeout(function() {
         $('.chat-box').not('.unselected').find('.not-ready-message').remove();
@@ -131,22 +132,35 @@ function send_message() {
     if (m < 10) {
         m = '0' + m;
     }
-    var time = '' + h + ':' + m;
+    var time = '' + h + ':' + m + ' <i class="fas fa-check"></i>';
     var text = $('#input-text').val();
     var user = $('.user.active');
     var box = $('.chat-box').not('.unselected');
     var user_detail = $('.chat-details').not('.unselected');
     if (box.children('.send-messages').is(':last-child')) {
-        var message = $('.template .send-messages .send-message').clone();
-        message.find('.text-message').text(text);
-        message.find('.clock').html(time + ' <i class="fas fa-check"></i>');
+        var template = Handlebars.compile($('#send-message-template').html());
+        var context = {
+            text : text,
+            time : time
+        }
+        var message = template(context);
+        // var message = $('.template .send-messages .send-message').clone();
+        // message.find('.text-message').text(text);
+        // message.find('.clock').html(time + ' <i class="fas fa-check"></i>');
         box.children('.send-messages:last-child').append(message);
     } else {
-        var message = $('.template .send-messages').clone();
-        message.find('.text-message').text(text);
-        message.find('.clock').html(time + ' <i class="fas fa-check"></i>');
+        var template = Handlebars.compile($('#send-messages-template').html());
+        var context = {
+            text : text,
+            time : time
+        }
+        var message = template(context);
+        // var message = $('.template .send-messages').clone();
+        // message.find('.text-message').text(text);
+        // message.find('.clock').html(time + ' <i class="fas fa-check"></i>');
         box.append(message);
     }
+    time = '' + h + ':' + m;
     $('#users').prepend(user);
     $('#header-chat').prepend(user_detail);
     $('#chat-boxes').prepend(box);
@@ -156,6 +170,7 @@ function send_message() {
     $('#input-text').val('');
     $('#vocal').addClass('active');
     $('#send').removeClass('active');
+    box.scrollTop(300000000);
     auto_reply(box, user, text, user_access, user_detail);
 }
 
@@ -205,14 +220,26 @@ function auto_reply(box, user, text, user_access, user_detail) {
                         }
                     }
                     if (box.children('.received-messages').is(':last-child')) {
-                        var message = $('.template .received-messages .received-message').clone();
-                        message.find('.text-message').text(textr);
-                        message.find('.clock').text(time);
+                        var template = Handlebars.compile($('#received-message-template').html());
+                        var context = {
+                            text : textr,
+                            time : time
+                        }
+                        var message = template(context);
+                        // var message = $('.template .received-messages .received-message').clone();
+                        // message.find('.text-message').text(textr);
+                        // message.find('.clock').text(time);
                         box.children('.received-messages:last-child').append(message);
                     } else {
-                        var message = $('.template .received-messages').clone();
-                        message.find('.text-message').text(textr);
-                        message.find('.clock').text(time);
+                        var template = Handlebars.compile($('#received-messages-template').html());
+                        var context = {
+                            text : textr,
+                            time : time
+                        }
+                        var message = template(context);
+                        // var message = $('.template .received-messages').clone();
+                        // message.find('.text-message').text(textr);
+                        // message.find('.clock').text(time);
                         box.append(message);
                     }
                     user.find('.user-message').removeClass('writing')
@@ -222,6 +249,7 @@ function auto_reply(box, user, text, user_access, user_detail) {
                     $('#users').prepend(user);
                     $('#header-chat').prepend(user_detail);
                     $('#chat-boxes').prepend(box);
+                    box.scrollTop(300000000);
                 }, 5000)
             }, 1000)
         }, 6000)

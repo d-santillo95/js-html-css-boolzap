@@ -5,6 +5,7 @@
         <title>Boolzap</title>
         <script src="https://kit.fontawesome.com/1cd71c3a7d.js" crossorigin="anonymous"></script>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/handlebars@latest/dist/handlebars.js"></script>
         <link rel="stylesheet" href="style.css">
     </head>
     <body>
@@ -1273,6 +1274,70 @@
                 <p></p>
             </div>
         </div>
+        <script id="send-messages-template" type="text/x-handlebars-template">
+            <div class="send-messages">
+                <div class="send-message message">
+                    <p class="text-message">{{ text }}</p>
+                    <div class="time">
+                        <p class="clock">{{{ time }}}</i></p>
+                    </div>
+                    <div class="message-setting">
+                        <i class="fas fa-angle-down"></i>
+                    </div>
+                    <div class="message-menu">
+                        <p>Info messaggio</p>
+                        <p>Cancella messagio</p>
+                    </div>
+                </div>
+            </div>
+        </script>
+        <script id="send-message-template" type="text/x-handlebars-template">
+            <div class="send-message message">
+                <p class="text-message">{{ text }}</p>
+                <div class="time">
+                    <p class="clock">{{{ time }}}</i></p>
+                </div>
+                <div class="message-setting">
+                    <i class="fas fa-angle-down"></i>
+                </div>
+                <div class="message-menu">
+                    <p>Info messaggio</p>
+                    <p>Cancella messagio</p>
+                </div>
+            </div>
+        </script>
+        <script id="received-messages-template" type="text/x-handlebars-template">
+            <div class="received-messages">
+                <div class="received-message message">
+                    <p class="text-message">{{ text }}</p>
+                    <div class="time">
+                        <p class="clock">{{{ time }}}</i></p>
+                    </div>
+                    <div class="message-setting">
+                        <i class="fas fa-angle-down"></i>
+                    </div>
+                    <div class="message-menu">
+                        <p>Info messaggio</p>
+                        <p>Cancella messagio</p>
+                    </div>
+                </div>
+            </div>
+        </script>
+        <script id="received-message-template" type="text/x-handlebars-template">
+            <div class="received-message message">
+                <p class="text-message">{{ text }}</p>
+                <div class="time">
+                    <p class="clock">{{{ time }}}</i></p>
+                </div>
+                <div class="message-setting">
+                    <i class="fas fa-angle-down"></i>
+                </div>
+                <div class="message-menu">
+                    <p>Info messaggio</p>
+                    <p>Cancella messagio</p>
+                </div>
+            </div>
+        </script>
         <script src="main.js" charset="utf-8"></script>
     </body>
 </html>
